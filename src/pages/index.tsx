@@ -32,7 +32,7 @@ const Home: NextPage = () => {
   const onSubmit = async (data:LoginFormType) => {
     setIsLoading(true);
     console.log(data);
-    router.push('menu');
+    router.push('/menu');
     reset();
   };
 

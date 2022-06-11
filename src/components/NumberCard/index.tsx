@@ -5,11 +5,14 @@ import styles from './NumberCard.module.scss';
 interface NumberCardProps{
   title: string;
   icon: string;
-  number: number
+  number: number;
+  link: string;
 }
 
-const NumberCard = ({ icon, number, title }:NumberCardProps) => (
-  <Link href="/">
+const NumberCard = ({
+  icon, number, title, link,
+}:NumberCardProps) => (
+  <Link href={link || '/'}>
     <div className={styles.container}>
       <div className={styles.title}>
         <Icon medium>

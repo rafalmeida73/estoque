@@ -1886,6 +1886,11 @@ react-materialize@^3.10.0:
   dependencies:
     classnames "^2.2.6"
 
+react-tiny-fab@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/react-tiny-fab/-/react-tiny-fab-4.0.4.tgz#0b293b403893a6a4fe689493818d498f277d62bb"
+  integrity sha512-PxT6gEnIQR2vFfeIaa1Oq4PRX+cIEDbEfbS6PyevWCQngrKfqjMKPEcZOaaURaUclB9u3RilgjkaBUQFVlbWcg==
+
 react-toastify@^9.0.4:
   version "9.0.4"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.0.4.tgz#016d0f3dae2f6e9c01eb36bd1d2c31b0a6de4434"

@@ -29,6 +29,7 @@ export const Footer = () => {
           <div className="col l2  s12">
             <ul>
 
+              <li><Link href="/">Início</Link></li>
               <li><Link href="/">Depósitos</Link></li>
               <li><Link href="/">Movimentações</Link></li>
               <li><Link href="/">Produtos</Link></li>

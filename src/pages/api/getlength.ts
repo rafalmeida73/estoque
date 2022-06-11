@@ -44,35 +44,39 @@ export interface GetlengthResponse{
 
 const getlength = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
-    const { data: deposits } = await axios.get<MovementsProps[]>('http://localhost:8080/deposito/lista', {
-      headers: {
-        accept: 'application/json',
-      },
-    });
-    const { data: movements } = await axios.get<DepositsProps[]>('http://localhost:8080/movimentacao/lista', {
-      headers: {
-        accept: 'application/json',
-      },
-    });
-    const { data: providers } = await axios.get<ProvidersProps[]>('http://localhost:8080/fornecedor/lista', {
-      headers: {
-        accept: 'application/json',
-      },
-    });
-    const { data: products } = await axios.get<ProductsProps[]>('http://localhost:8080/produto/lista', {
-      headers: {
-        accept: 'application/json',
-      },
-    });
+    try {
+      const { data: deposits } = await axios.get<DepositsProps[]>('http://localhost:8080/deposito/lista', {
+        headers: {
+          accept: 'application/json',
+        },
+      });
+      const { data: movements } = await axios.get<MovementsProps[]>('http://localhost:8080/movimentacao/lista', {
+        headers: {
+          accept: 'application/json',
+        },
+      });
+      const { data: providers } = await axios.get<ProvidersProps[]>('http://localhost:8080/fornecedor/lista', {
+        headers: {
+          accept: 'application/json',
+        },
+      });
+      const { data: products } = await axios.get<ProductsProps[]>('http://localhost:8080/produto/lista', {
+        headers: {
+          accept: 'application/json',
+        },
+      });
 
-    const response = {
-      deposits: deposits.length,
-      movements: movements.length,
-      providers: providers.length,
-      products: products.length,
-    };
+      const response = {
+        deposits: deposits.length,
+        movements: movements.length,
+        providers: providers.length,
+        products: products.length,
+      };
 
-    return res.status(200).json(response);
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(500).send('Internal server error');
+    }
   }
 
   res.setHeader('Allow', 'GET');

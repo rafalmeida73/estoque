@@ -13,6 +13,7 @@
   --blue-500: #00A7E7;
 
   --green-500: #009688;
+  --red-500: #f44336;
 }
 
 @media (max-width: 1080px) {
@@ -44,6 +45,10 @@ button {
   cursor: pointer;
 }
 
+h1, h2, h3, h4, h5, h6{
+  margin: 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -69,6 +74,12 @@ th {
 
 .disabled-link {
   pointer-events: none;
+}
+
+.rtf{
+  button{
+    background-color: var(--blue-500);
+  }
 }
 
 
@@ -191,15 +202,10 @@ nav {
   li {
     box-shadow: none !important;
   }
-
-  div {
-    border: none !important;
-  }
 }
 
 .collapsible-header {
   background: none !important;
-  border: none !important;
 }
 
 .collapsible-body {

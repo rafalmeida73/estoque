@@ -33,14 +33,15 @@ const Header = () => (
         preventScrolling: true,
       }}
     >
-      <Link href="/">
+      <Link href="/menu">
+        <a>Início</a>
+      </Link>
+      <Link href="/depositos">
         <a>Depósitos</a>
       </Link>
-
       <Link href="/">
         <a>Movimentações</a>
       </Link>
-
       <Link href="/">
         <a>Produtos</a>
       </Link>

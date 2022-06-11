@@ -5,14 +5,13 @@
   margin: 1rem 0;
   color: var(--white);
   width: 100%;
+  cursor: pointer;
 
   p{
     margin-top: 3rem;
     font-size: 3rem;
     text-align: center;
   }
-
-  
 }
 
 .title {
@@ -28,8 +27,6 @@
   i{
     display: none;
   }
-
- 
 }
 
 @media (min-width: 576px) {

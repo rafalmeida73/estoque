@@ -1,0 +1,43 @@
+.container {
+  main {
+    height: calc(100vh - 4rem);
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    h2 {
+      margin-top: 2rem;
+    }
+  }
+}
+
+.info {
+  display: flex;
+  width: 100%;
+  p {
+    margin-right: 0.5rem !important;
+  }
+  margin-bottom: 1rem;
+}
+
+.card {
+  min-width: 70vh;
+}
+
+.cardContainer{
+  display: flex;
+  justify-content: space-between;
+
+  button{
+    background: none;
+    border: none;
+    height: 0;
+
+    i{
+      color: var(--red-500);
+    }
+  }
+}
