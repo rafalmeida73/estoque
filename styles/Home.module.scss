@@ -1,0 +1,37 @@
+.container {
+  height: calc(100vh - 4rem);
+  width: 100%;
+  padding: 0 2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  form {
+    width: 100%;
+
+    button[type="submit"]{
+      margin-top: 2rem;
+    }
+  }
+}
+
+.lottie {
+  display: none;
+  width: 40%;
+  max-height: calc(100vh - 4rem);
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding: 0 10rem;
+
+    form {
+      width: 40%;
+    }
+  }
+
+  .lottie {
+    display: block;
+  }
+}

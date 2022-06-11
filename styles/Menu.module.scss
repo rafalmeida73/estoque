@@ -1,0 +1,68 @@
+.container {
+  main {
+    svg {
+      height: 60vh !important;
+    }
+  }
+}
+
+.containerCards{
+  height: calc(100vh - 4rem);
+  width: 100% !important;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 576px) {
+  .containerCards{
+    height: calc(100vh - 4rem);
+  }
+
+  .container {
+    main {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .containerCards{
+    height: auto;
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+}
+
+
+@media (min-width: 992px) {
+
+  .container {
+    main {
+      height: calc(100vh - 4rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+    }
+  }
+
+  .containerCards{
+    height: auto;
+    display: block;
+    padding: 0 10rem;
+  }
+ 
+
+}
+

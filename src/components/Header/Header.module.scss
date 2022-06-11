@@ -1,0 +1,37 @@
+.container {
+  max-height: 4.2rem;
+
+  z-index: 1000;
+
+  a {
+    cursor: pointer;
+  }
+
+  button {
+    background: none;
+    border: none;
+
+    a {
+      color: rgba(0, 0, 0, 0.87);
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      height: 48px;
+      line-height: 48px;
+      padding: 0 32px;
+    }
+
+    &:hover {
+      background: none;
+    }
+  }
+
+  nav {
+    background-color: var(--white);
+    color: var(--black);
+
+    .sidenav-trigger {
+      color: var(--black);
+    }
+  }
+}
