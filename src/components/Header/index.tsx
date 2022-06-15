@@ -9,7 +9,7 @@ const Header = () => (
       alignLinks="right"
       brand={(
         <div title="Início">
-          <Link href="/">
+          <Link href="/menu">
             <a>
               <Image
                 src="/logo.jpg"
@@ -39,13 +39,13 @@ const Header = () => (
       <Link href="/depositos">
         <a>Depósitos</a>
       </Link>
-      <Link href="/">
+      <Link href="/movimentacoes">
         <a>Movimentações</a>
       </Link>
-      <Link href="/">
+      <Link href="/produtos">
         <a>Produtos</a>
       </Link>
-      <Link href="/">
+      <Link href="/fornecedores">
         <a>Fornecedores</a>
       </Link>
       <Link href="/">

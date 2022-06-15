@@ -15,7 +15,7 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement>{
   isDate?: boolean;
   isTelephone?: boolean;
   isEmail?: boolean
-  defaultValue?: string
+  defaultValue?: string | number
 }
 
 export const TextInput = ({
@@ -42,9 +42,9 @@ export const TextInput = ({
   return (
     <div>
       <div className="input-field">
-        <i className="material-icons prefix">{icon}</i>
+        <i className="material-icons prefix ">{icon}</i>
         <input id={id} type={type} className="validate" {...register?.(id)} {...rest} onKeyUp={maskDate} defaultValue={defaultValue} />
-        <label htmlFor={id} className={defaultValue ? 'active' : ''}>{label}</label>
+        <label htmlFor={id} className={defaultValue || defaultValue === 0 ? 'active' : ''}>{label}</label>
       </div>
 
       {errors?.[id]?.message && (

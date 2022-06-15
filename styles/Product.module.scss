@@ -8,7 +8,9 @@
     justify-content: space-around;
     align-items: center;
 
-    
+    h2 {
+      margin-top: 2rem;
+    }
   }
 }
 
@@ -24,26 +26,36 @@
 .card {
   min-width: 70vh;
 
-  section{
+  section {
     display: flex;
     justify-content: space-between;
-    margin-top: 2rem;
+
+    button:first-of-type i {
+      color: var(--red-500);
+    }
+
+    button {
+      background: none;
+      border: none;
+      margin: 0 1rem;
+    }
+
     i{
       cursor: pointer;
     }
   }
 }
 
-.cardContainer{
+.cardContainer {
   display: flex;
   justify-content: space-between;
 
-  button{
+  button {
     background: none;
     border: none;
     height: 0;
 
-    i{
+    i {
       color: var(--red-500);
     }
   }

@@ -1,17 +1,10 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const addDeposit = async (req: NextApiRequest, res: NextApiResponse) => {
+const AddProvider = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
-      const reqData = {
-        id_deposito: 0,
-        nome_deposito: req.body.nome_deposito,
-        pontoReposicao_deposito: req.body.pontoReposicao_deposito,
-        produto: [],
-      };
-
-      const { data } = await axios.post('http://localhost:8080/deposito/cria', reqData, {
+      const { data } = await axios.post('http://localhost:8080/fornecedor/cria', req.body, {
         headers: {
           accept: 'application/json',
         },
@@ -27,4 +20,4 @@ const addDeposit = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(405).end('Method not allowed');
 };
 
-export default addDeposit;
+export default AddProvider;

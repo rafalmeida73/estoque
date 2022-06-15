@@ -6,6 +6,7 @@ import {
   Collapsible, CollapsibleItem, Icon,
 } from 'react-materialize';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 import Loading from '../../components/Loading';
 import { api } from '../../services/api';
 import styles from '../../../styles/Deposit.module.scss';
@@ -115,14 +116,20 @@ const Deposit: NextPage = () => {
                   </div>
                   {deposit?.produto && (
                     <>
-                      <h2 className="card-title">
-                        Produtos
-                      </h2>
+                      <section>
+                        <h2 className="card-title">
+                          Produtos
+                        </h2>
+                        <Link href="/adicionar-produto-deposito">
+                          <Icon>add</Icon>
+                        </Link>
+                      </section>
 
                       {deposit?.produto?.map((item) => (
                         <Collapsible
                           accordion
                           popout
+                          key={item?.id_produto}
                         >
                           <CollapsibleItem
                             expanded={false}
@@ -193,6 +200,7 @@ const Deposit: NextPage = () => {
           </div>
         </main>
       </div>
+
     </>
   );
 };

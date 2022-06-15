@@ -1,0 +1,40 @@
+.container{
+  main {
+    height: calc(100vh - 4rem);
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  
+    table{
+      border: 1px solid var(--black);
+      border-radius: 1rem;
+      padding: 2rem 0;
+
+      td p{
+        cursor: pointer;
+        color: var(--blue-500);
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  p{
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  i{
+    cursor: pointer;
+    color: var(--yellow-500);
+  }
+}

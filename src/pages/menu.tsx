@@ -49,10 +49,10 @@ const Menu = () => {
               <NumberCard icon="cached" number={length?.movements || 0} title="Movimentações" link="/movimentacoes" />
             </div>
             <div className="col s6 m3 l3">
-              <NumberCard icon="storage" number={length?.products || 0} title="Produtos" link="/" />
+              <NumberCard icon="storage" number={length?.products || 0} title="Produtos" link="/produtos" />
             </div>
             <div className="col s6 m3 l3">
-              <NumberCard icon="business_center" number={length?.providers || 0} title="Fornecedores" link="/" />
+              <NumberCard icon="business_center" number={length?.providers || 0} title="Fornecedores" link="/fornecedores" />
             </div>
           </div>
 

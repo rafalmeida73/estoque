@@ -29,11 +29,11 @@ export const Footer = () => {
           <div className="col l2  s12">
             <ul>
 
-              <li><Link href="/">Início</Link></li>
-              <li><Link href="/">Depósitos</Link></li>
-              <li><Link href="/">Movimentações</Link></li>
-              <li><Link href="/">Produtos</Link></li>
-              <li><Link href="/">Fornecedores</Link></li>
+              <li><Link href="/menu">Início</Link></li>
+              <li><Link href="/depositos">Depósitos</Link></li>
+              <li><Link href="/movimentacoes">Movimentações</Link></li>
+              <li><Link href="/produtos">Produtos</Link></li>
+              <li><Link href="/fornecedores">Fornecedores</Link></li>
               <li>
                 <button type="button" onClick={handleSignOut}>
                   <a>Sair</a>
