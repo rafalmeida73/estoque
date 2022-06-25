@@ -5,28 +5,34 @@ import { Icon } from 'react-materialize';
 import { toast } from 'react-toastify';
 import styles from '../../styles/Providers.module.scss';
 import Loading from '../components/Loading';
-import { api } from '../services/api';
-import { ProvidersProps } from './api/getlength';
+import { useQuarkusContext } from '../context/useQuarkus';
 
 const Providers = () => {
-  const [providers, setProviders] = useState<ProvidersProps[]>();
+  const [loading, setLoading] = useState(false);
 
-  const getProviders = useCallback(async () => {
-    try {
-      const { data } = await api.get<ProvidersProps[]>('/providers');
-      setProviders(data);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      toast.error('Ocorreu um erro ao requisitar o fornecedores');
-    }
-  }, []);
+  const {
+    providers, getProviders,
+  } = useQuarkusContext();
+
+  const loadProviders = useCallback(
+    async () => {
+      setLoading(true);
+      try {
+        await getProviders();
+      } catch (error) {
+        toast.error('Ocorreu um erro ao requisitar os fornecedores');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [getProviders],
+  );
 
   useEffect(() => {
-    getProviders();
-  }, [getProviders]);
+    loadProviders();
+  }, [loadProviders]);
 
-  if (!providers) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -55,19 +61,26 @@ const Providers = () => {
               <tr>
                 <th>Identificador</th>
                 <th>Nome</th>
+                <th>Produtos</th>
               </tr>
             </thead>
 
             <tbody>
               {providers?.map((provider) => (
-                <tr key={provider?.id_fornecedor}>
+                <tr key={provider?.fo_id}>
                   <td>
-                    {provider?.id_fornecedor}
+                    <Link href={`/fornecedor/${provider?.fo_id}`}>
+                      <p>
+                        {provider?.fo_id}
+                      </p>
+                    </Link>
                   </td>
                   <td>
-                    {provider?.nome_fornecedor}
+                    {provider?.fo_nome}
                   </td>
-
+                  <td>
+                    {provider?.fo_list_produto?.length}
+                  </td>
                 </tr>
               ))}
 

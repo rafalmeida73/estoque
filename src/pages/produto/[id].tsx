@@ -10,27 +10,18 @@ import Link from 'next/link';
 import Loading from '../../components/Loading';
 import { api } from '../../services/api';
 import styles from '../../../styles/Product.module.scss';
-import { ProductsProps } from '../api/getlength';
+import { ProductsProps, useQuarkusContext } from '../../context/useQuarkus';
 
 const Product: NextPage = () => {
   const router = useRouter();
   const id = `${router?.query?.id}`;
 
+  const {
+    products, getProducts,
+  } = useQuarkusContext();
+
   const [product, setProduct] = useState<ProductsProps>();
   const [loading, setLoading] = useState(false);
-
-  const getProduct = useCallback(async () => {
-    try {
-      setLoading(true);
-      const { data } = await api.get<ProductsProps>(`/product/${id}`);
-      setProduct(data);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [id]);
 
   const price = useCallback((value: number) => {
     if (value) {
@@ -54,6 +45,8 @@ const Product: NextPage = () => {
         render: 'Produto removido  com sucesso', type: 'success', isLoading: false, autoClose: 5000,
       });
 
+      await getProducts();
+
       router.push('/produtos');
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -64,13 +57,31 @@ const Product: NextPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [id, router]);
+  }, [getProducts, id, router]);
+
+  const loadProducts = useCallback(
+    async () => {
+      setLoading(true);
+      try {
+        await getProducts();
+      } catch (error) {
+        toast.error('Ocorreu um erro ao requisitar produtos');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [getProducts],
+  );
 
   useEffect(() => {
-    getProduct();
-  }, [getProduct]);
+    loadProducts();
+  }, [loadProducts]);
 
-  if (loading || !product) {
+  useEffect(() => {
+    setProduct(products.find((item) => item?.pr_id === Number(id)));
+  }, [id, products]);
+
+  if (loading) {
     return <Loading />;
   }
 
@@ -113,7 +124,16 @@ const Product: NextPage = () => {
                     </p>
                     <span>
                       {' '}
-                      {product?.nome_produto}
+                      {product?.pr_nome}
+                    </span>
+                  </div>
+                  <div className={styles.info}>
+                    <p>
+                      Precisa repor:
+                    </p>
+                    <span>
+                      {' '}
+                      {product?.pr_pont_repo ? 'Sim' : 'Não'}
                     </span>
                   </div>
                   <div className={styles.info}>
@@ -122,7 +142,7 @@ const Product: NextPage = () => {
                     </p>
                     <span>
                       {' '}
-                      {product?.pontoReposicao_produto}
+                      {product?.pr_reposicao}
                     </span>
                   </div>
                   <div className={styles.info}>
@@ -131,7 +151,7 @@ const Product: NextPage = () => {
                     </p>
                     <span>
                       {' '}
-                      {price(product?.preco)}
+                      {price(product?.pr_preco || 0)}
                     </span>
                   </div>
                   <div className={styles.info}>
@@ -140,7 +160,7 @@ const Product: NextPage = () => {
                     </p>
                     <span>
                       {' '}
-                      {product?.quantidade_produto}
+                      {product?.pr_quantidade}
                     </span>
                   </div>
                 </div>

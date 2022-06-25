@@ -5,22 +5,28 @@ import { Icon } from 'react-materialize';
 import { toast } from 'react-toastify';
 import styles from '../../styles/Products.module.scss';
 import Loading from '../components/Loading';
-import { api } from '../services/api';
-import { ProductsProps } from './api/getlength';
+import { useQuarkusContext } from '../context/useQuarkus';
 
 const Products = () => {
-  const [products, setProducts] = useState<ProductsProps[]>();
+  const [loading, setLoading] = useState(false);
 
-  const getDeposits = useCallback(async () => {
-    try {
-      const { data } = await api.get<ProductsProps[]>('/products');
-      setProducts(data);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      toast.error('Ocorreu um erro ao requisitar os produtos');
-    }
-  }, []);
+  const {
+    products, getProducts,
+  } = useQuarkusContext();
+
+  const loadProducts = useCallback(
+    async () => {
+      setLoading(true);
+      try {
+        await getProducts();
+      } catch (error) {
+        toast.error('Ocorreu um erro ao requisitar os produtos');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [getProducts],
+  );
 
   const price = useCallback((value: number) => {
     if (value) {
@@ -34,10 +40,10 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    getDeposits();
-  }, [getDeposits]);
+    loadProducts();
+  }, [loadProducts]);
 
-  if (!products) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -66,6 +72,7 @@ const Products = () => {
               <tr>
                 <th>Identificador</th>
                 <th>Nome</th>
+                <th>Precisa repor?</th>
                 <th>Preço</th>
                 <th>Quantidade</th>
                 <th>Ponto de reposição</th>
@@ -74,18 +81,19 @@ const Products = () => {
 
             <tbody>
               {products?.map((product) => (
-                <tr key={product?.id_produto}>
+                <tr key={product?.pr_id}>
                   <td>
-                    <Link href={`/produto/${product?.id_produto}`}>
+                    <Link href={`/produto/${product?.pr_id}`}>
                       <p>
-                        {product?.id_produto}
+                        {product?.pr_id}
                       </p>
                     </Link>
                   </td>
-                  <td>{product?.nome_produto}</td>
-                  <td>{price(product?.preco)}</td>
-                  <td>{product?.quantidade_produto}</td>
-                  <td>{product?.pontoReposicao_produto}</td>
+                  <td>{product?.pr_nome}</td>
+                  <td>{product?.pr_pont_repo ? 'Sim' : 'Não'}</td>
+                  <td>{price(product?.pr_preco)}</td>
+                  <td>{product?.pr_quantidade}</td>
+                  <td>{product?.pr_reposicao}</td>
                 </tr>
               ))}
 

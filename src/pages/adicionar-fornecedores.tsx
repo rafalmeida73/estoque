@@ -61,7 +61,7 @@ const AddProviders: NextPage = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <TextInput register={register} id="nome_fornecedor" errors={errors} icon="edit" label="Nome do fornecedor" />
+        <TextInput register={register} id="fo_nome" errors={errors} icon="edit" label="Nome do fornecedor" />
 
         <div className={styles.formButtons}>
           <LoadingButton type="submit" title="Criar" loading={isloading} />

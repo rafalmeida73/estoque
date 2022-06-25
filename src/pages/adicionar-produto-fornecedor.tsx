@@ -10,23 +10,22 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Select from 'react-select';
 import styles from '../../styles/AddDeposit.module.scss';
-import { schema } from '../validations/productInDeposit';
+import { schema } from '../validations/productInProvider';
 import LoadingButton from '../components/LoadingButton';
 import { api } from '../services/api';
 import Loading from '../components/Loading';
 import { useQuarkusContext } from '../context/useQuarkus';
 
 export interface AddProductInDepositType{
-  id_deposito: {value: number, label: number};
+  id_fornecedor: {value: number, label: number};
   id_produto: {value: number, label: number};
-  tipo: {value: string, label: string};
 }
 
-const AddProductInDeposit: NextPage = () => {
+const AddProductInProvider: NextPage = () => {
   const [isloading, setIsLoading] = useState(false);
 
   const {
-    deposits, getDeposits, getProducts, products,
+    providers, getProviders, getProducts, products,
   } = useQuarkusContext();
 
   const router = useRouter();
@@ -42,14 +41,14 @@ const AddProductInDeposit: NextPage = () => {
       setIsLoading(true);
       try {
         await getProducts();
-        await getDeposits();
+        await getProviders();
       } catch (error) {
         toast.error('Ocorreu um erro ao requisitar os produtos ou depósito');
       } finally {
         setIsLoading(false);
       }
     },
-    [getDeposits, getProducts],
+    [getProviders, getProducts],
   );
 
   const onSubmit = handleSubmit(async (formData) => {
@@ -58,18 +57,21 @@ const AddProductInDeposit: NextPage = () => {
     const addToast = toast.loading('Carregando...');
 
     try {
-      await api.put(`/addProductInDeposit/${data.id_deposito.value}/${data.id_produto.value}/${data.tipo.value}`);
+      await api.put(`/addProductInProvider/${data.id_fornecedor.value}/${data.id_produto.value}`);
       toast.update(addToast, {
-        render: 'Produto adicionado ao depósito com sucesso', type: 'success', isLoading: false, autoClose: 5000,
+        render: 'Produto adicionado ao fornecedor com sucesso', type: 'success', isLoading: false, autoClose: 5000,
       });
 
       reset();
-      router.push(`/deposito/${data.id_deposito.value}`);
+
+      await getProviders();
+
+      router.push(`/deposito/${data.id_fornecedor.value}`);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
       toast.update(addToast, {
-        render: 'Ocorreu um erro ao tentar adicionar produto ao depósito, tente novamente', type: 'error', isLoading: false, autoClose: 5000,
+        render: 'Ocorreu um erro ao tentar adicionar produto ao fornecedor, tente novamente', type: 'error', isLoading: false, autoClose: 5000,
       });
     }
   });
@@ -78,12 +80,9 @@ const AddProductInDeposit: NextPage = () => {
     loadData();
   }, [loadData]);
 
-  const productsOptions = useMemo(() => (products.map((product) => ({ value: product?.pr_id, label: product?.pr_id }))), [products]);
-  const depositsOptions = useMemo(() => (deposits.map((deposit) => ({ value: deposit?.de_id, label: deposit?.de_id }))), [deposits]);
-  const typeOptions = [
-    { value: 'doacao', label: 'Por doação' },
-    { value: '', label: 'Nota fiscal' },
-  ];
+  const productsOptions = useMemo(() => (products.map((product) => ({ value: product?.pr_id, label: product?.pr_nome }))), [products]);
+  const providersOptions = useMemo(() => (providers.map((provider) => ({ value: provider?.fo_id, label: provider?.fo_nome }))), [providers]);
+
   if (isloading) {
     return <Loading />;
   }
@@ -104,14 +103,16 @@ const AddProductInDeposit: NextPage = () => {
           name="id_produto"
           control={control}
           render={({ field }) => (
-            <Select
-              options={productsOptions}
-              styles={{
-                menu: (provided) => ({ ...provided, zIndex: 9999 }),
-              }}
-              placeholder="Selecione o produto"
-              {...field}
-            />
+            <div className="input-field col s12">
+              <Select
+                options={productsOptions}
+                styles={{
+                  menu: (provided) => ({ ...provided, zIndex: 9999 }),
+                }}
+                placeholder="Selecione o produto"
+                {...field}
+              />
+            </div>
           )}
         />
 
@@ -120,16 +121,16 @@ const AddProductInDeposit: NextPage = () => {
         </p>
 
         <Controller
-          name="id_deposito"
+          name="id_fornecedor"
           control={control}
           render={({ field }) => (
             <div className="input-field col s12">
               <Select
-                options={depositsOptions}
+                options={providersOptions}
                 styles={{
                   menu: (provided) => ({ ...provided, zIndex: 9999 }),
                 }}
-                placeholder="Selecione o depósito"
+                placeholder="Selecione o fornecedor"
                 {...field}
               />
             </div>
@@ -137,28 +138,7 @@ const AddProductInDeposit: NextPage = () => {
         />
 
         <p className="errorLabel">
-          {errors?.id_deposito?.message}
-        </p>
-
-        <Controller
-          name="tipo"
-          control={control}
-          render={({ field }) => (
-            <div className="input-field col s12">
-              <Select
-                options={typeOptions}
-                styles={{
-                  menu: (provided) => ({ ...provided, zIndex: 9999 }),
-                }}
-                placeholder="Tipo"
-                {...field}
-              />
-            </div>
-          )}
-        />
-
-        <p className="errorLabel">
-          {errors?.id_deposito?.message}
+          {errors?.id_fornecedor?.message}
         </p>
 
         <div className={styles.formButtons}>
@@ -170,4 +150,4 @@ const AddProductInDeposit: NextPage = () => {
   );
 };
 
-export default AddProductInDeposit;
+export default AddProductInProvider;

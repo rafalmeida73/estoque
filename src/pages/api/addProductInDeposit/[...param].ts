@@ -5,7 +5,7 @@ const addProductInDeposit = async (req: NextApiRequest, res: NextApiResponse) =>
   const { param } = req.query;
   if (req.method === 'PUT') {
     try {
-      const { data } = await axios.put(`http://localhost:8080/deposito/addDeposito/${param[0]}/${param[1]}`, {
+      const { data } = await axios.put(`http://localhost:8080/service/deposito/${param[0]}/produto/${param[1]}${param[2] ? `/${param[2]}` : ''}`, {
         headers: {
           accept: 'application/json',
         },

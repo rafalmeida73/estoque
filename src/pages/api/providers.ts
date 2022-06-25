@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ProvidersProps } from './getlength';
+import { ProvidersProps } from '../../context/useQuarkus';
 
 const getlength = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
-      const { data } = await axios.get<ProvidersProps[]>('http://localhost:8080/fornecedor/lista', {
+      const { data } = await axios.get<ProvidersProps[]>('http://localhost:8080/fornecedor', {
         headers: {
           accept: 'application/json',
         },

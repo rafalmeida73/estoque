@@ -1,18 +1,17 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { DepositsProps } from '../getlength';
+import { ProvidersProps } from '../../context/useQuarkus';
 
-const getDeposit = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
+const login = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
-      const { data: deposits } = await axios.get<DepositsProps>(`http://localhost:8080/deposito/buscaPorId/${id}`, {
+      const { data } = await axios.get<ProvidersProps[]>('http://localhost:8080/login', {
         headers: {
           accept: 'application/json',
         },
       });
 
-      return res.status(200).json(deposits);
+      return res.status(200).json(data);
     } catch (error) {
       return res.status(500).send('Internal server error');
     }
@@ -22,4 +21,4 @@ const getDeposit = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(405).end('Method not allowed');
 };
 
-export default getDeposit;
+export default login;

@@ -64,10 +64,9 @@ const AddDeposit: NextPage = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
 
         <TextInput register={register} id="nome_deposito" errors={errors} icon="edit" label="Nome" />
-        <TextInput register={register} id="pontoReposicao_deposito" errors={errors} icon="filter_2" label="Ponto de reposição" type="number" />
 
         <div className={styles.formButtons}>
-          <LoadingButton type="submit" title="Criar" loading={isloading} />
+          <LoadingButton type="submit" title="Criar depósito" loading={isloading} />
         </div>
       </form>
 

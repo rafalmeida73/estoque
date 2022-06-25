@@ -5,10 +5,11 @@ import Header from '../components/Header';
 import { Footer } from '../components/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-tiny-fab/dist/styles.css';
+import QuarkusContextProvider from '../context/useQuarkus';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <QuarkusContextProvider>
       <Header />
       <ToastContainer
         autoClose={3000}
@@ -23,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       />
       <Component {...pageProps} />
       <Footer />
-    </>
+    </QuarkusContextProvider>
 
   );
 }

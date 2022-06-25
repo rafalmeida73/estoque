@@ -5,7 +5,7 @@ const deleteProdut = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   if (req.method === 'DELETE') {
     try {
-      const { data } = await axios.get(`http://localhost:8080/produto/exclui/${id}`, {
+      const { data } = await axios.delete(`http://localhost:8080/produto/${id}`, {
         headers: {
           accept: 'application/json',
         },

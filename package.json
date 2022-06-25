@@ -23,6 +23,7 @@
     "react-dom": "18.1.0",
     "react-hook-form": "^7.32.0",
     "react-materialize": "^3.10.0",
+    "react-select": "^5.3.2",
     "react-tiny-fab": "^4.0.4",
     "react-toastify": "^9.0.4",
     "sass": "^1.52.3",

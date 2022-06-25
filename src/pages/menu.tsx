@@ -1,34 +1,22 @@
 import Head from 'next/head';
-import { useCallback, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+
 import { VictoryBar, VictoryChart, VictoryTheme } from 'victory';
 import styles from '../../styles/Menu.module.scss';
-import Loading from '../components/Loading';
 import NumberCard from '../components/NumberCard';
-import { api } from '../services/api';
-import { GetlengthResponse } from './api/getlength';
+import { useQuarkusContext } from '../context/useQuarkus';
 
 const Menu = () => {
-  const [length, setLength] = useState<GetlengthResponse>();
-
-  const getLength = useCallback(async () => {
-    try {
-      const { data } = await api.get<GetlengthResponse>('getlength');
-      setLength(data);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      toast.error('Ocorreu um erro ao requisitar o tamanhos');
-    }
-  }, []);
+  const {
+    deposits, movements, products, providers, getDeposits, getMovements, getProducts, getProviders,
+  } = useQuarkusContext();
 
   useEffect(() => {
-    getLength();
-  }, [getLength]);
-
-  if (!length) {
-    return <Loading />;
-  }
+    getDeposits();
+    getMovements();
+    getProducts();
+    getProviders();
+  }, [getDeposits, getMovements, getProducts, getProviders]);
 
   return (
     <>
@@ -43,16 +31,16 @@ const Menu = () => {
         <main>
           <div className={`${styles.containerCards} row`}>
             <div className="col s6 m3 l3 ">
-              <NumberCard icon="business" number={length?.deposits || 0} title="Depósitos" link="/depositos" />
+              <NumberCard icon="business" number={deposits?.length || 0} title="Depósitos" link="/depositos" />
             </div>
             <div className="col s6 m3 l3">
-              <NumberCard icon="cached" number={length?.movements || 0} title="Movimentações" link="/movimentacoes" />
+              <NumberCard icon="cached" number={movements?.length || 0} title="Movimentações" link="/movimentacoes" />
             </div>
             <div className="col s6 m3 l3">
-              <NumberCard icon="storage" number={length?.products || 0} title="Produtos" link="/produtos" />
+              <NumberCard icon="storage" number={products?.length || 0} title="Produtos" link="/produtos" />
             </div>
             <div className="col s6 m3 l3">
-              <NumberCard icon="business_center" number={length?.providers || 0} title="Fornecedores" link="/fornecedores" />
+              <NumberCard icon="business_center" number={providers?.length || 0} title="Fornecedores" link="/fornecedores" />
             </div>
           </div>
 
@@ -66,10 +54,10 @@ const Menu = () => {
                 style={{ data: { fill: '#00A7E7' } }}
                 alignment="start"
                 data={[
-                  { title: 'Depósitos', quantity: length?.deposits || 0 },
-                  { title: 'Movimentações', quantity: length?.movements || 0 },
-                  { title: 'Produtos', quantity: length?.products || 0 },
-                  { title: 'Fornecedores', quantity: length?.providers || 0 },
+                  { title: 'Depósitos', quantity: deposits?.length || 0 },
+                  { title: 'Movimentações', quantity: movements?.length || 0 },
+                  { title: 'Produtos', quantity: products?.length || 0 },
+                  { title: 'Fornecedores', quantity: providers?.length || 0 },
                 ]}
                 x="title"
                 y="quantity"

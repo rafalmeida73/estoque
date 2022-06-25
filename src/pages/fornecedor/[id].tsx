@@ -9,18 +9,18 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Loading from '../../components/Loading';
 import styles from '../../../styles/Deposit.module.scss';
-import { DepositsProps, useQuarkusContext } from '../../context/useQuarkus';
+import { ProvidersProps, useQuarkusContext } from '../../context/useQuarkus';
 import { api } from '../../services/api';
 
-const Deposit: NextPage = () => {
+const Provider: NextPage = () => {
   const router = useRouter();
   const id = `${router?.query?.id}`;
 
   const {
-    deposits, getDeposits,
+    providers, getProviders,
   } = useQuarkusContext();
 
-  const [deposit, setDeposit] = useState<DepositsProps>();
+  const [provider, setProvider] = useState<ProvidersProps>();
   const [loading, setLoading] = useState(false);
 
   const price = useCallback((value: number) => {
@@ -39,70 +39,70 @@ const Deposit: NextPage = () => {
 
     try {
       setLoading(true);
-      await api.delete<DepositsProps>(`/removeProductFromDeposit/${id}/${idProduct}`);
+      await api.delete(`/removeProductFromProvider/${id}/${idProduct}`);
 
       toast.update(addToast, {
-        render: 'Produto removido do depósito com sucesso', type: 'success', isLoading: false, autoClose: 5000,
+        render: 'Produto removido do fornecedor com sucesso', type: 'success', isLoading: false, autoClose: 5000,
       });
 
-      await getDeposits();
+      await getProviders();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
       toast.update(addToast, {
-        render: 'Ocorreu um eror ao tentar remover o produto do depósito, tente novamnete', type: 'error', isLoading: false, autoClose: 5000,
+        render: 'Ocorreu um eror ao tentar remover o produto do fornecedor, tente novamnete', type: 'error', isLoading: false, autoClose: 5000,
       });
     } finally {
       setLoading(false);
     }
-  }, [getDeposits, id]);
+  }, [getProviders, id]);
 
-  const loadDeposits = useCallback(
+  const loadProviders = useCallback(
     async () => {
       setLoading(true);
       try {
-        await getDeposits();
+        await getProviders();
       } catch (error) {
-        toast.error('Ocorreu um erro ao requisitar depósito');
+        toast.error('Ocorreu um erro ao requisitar Fornecedor');
       } finally {
         setLoading(false);
       }
     },
-    [getDeposits],
+    [getProviders],
   );
 
-  const handleDeleteDeposit = useCallback(async () => {
+  const handleDeleteProvider = useCallback(async () => {
     const addToast = toast.loading('Carregando...');
 
     try {
       setLoading(true);
-      await api.delete(`deleteDeposit/${id}`);
+      await api.delete(`deleteProvider/${id}`);
 
       toast.update(addToast, {
-        render: 'Depósito removido  com sucesso', type: 'success', isLoading: false, autoClose: 5000,
+        render: 'Fornecedor removido  com sucesso', type: 'success', isLoading: false, autoClose: 5000,
       });
 
-      await getDeposits();
+      await getProviders();
 
-      router.push('/produtos');
+      router.push('/fornecedores');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
       toast.update(addToast, {
-        render: 'Ocorreu um eror ao tentar remover  depósito, tente novamnete', type: 'error', isLoading: false, autoClose: 5000,
+        render: 'Ocorreu um eror ao tentar remover fornecedor, tente novamnete', type: 'error', isLoading: false, autoClose: 5000,
       });
     } finally {
       setLoading(false);
     }
-  }, [getDeposits, id, router]);
+  }, [getProviders, id, router]);
 
   useEffect(() => {
-    loadDeposits();
-  }, [getDeposits, loadDeposits]);
+    loadProviders();
+  }, [loadProviders]);
 
   useEffect(() => {
-    setDeposit(deposits.find((item) => item?.de_id === Number(id)));
-  }, [deposits, id]);
+    setProvider(providers.find((item) => item?.fo_id === Number(id)));
+  }, [id, providers]);
 
   if (loading) {
     return <Loading />;
@@ -112,7 +112,7 @@ const Deposit: NextPage = () => {
     <>
       <Head>
         <title>
-          Depósito
+          Fornecedor
           {' '}
           {id}
           {' '}
@@ -128,38 +128,33 @@ const Deposit: NextPage = () => {
 
                   <section>
                     <h1 className="card-title">
-                      Depósito:
+                      Fornecedor:
                       {' '}
-                      {deposit?.de_nome}
+                      {provider?.fo_nome}
                     </h1>
 
                     <div>
-                      <button type="button" onClick={handleDeleteDeposit} title="Deletar">
+                      <button type="button" onClick={handleDeleteProvider} title="Deletar">
                         <Icon>delete</Icon>
                       </button>
-                      <Link href={`/editar-deposito/${id}`} title="Editar">
+                      <Link href={`/editar-fornecedor/${id}`} title="Editar">
                         <Icon>edit</Icon>
                       </Link>
                     </div>
                   </section>
 
-                  <p>
-                    Identificador:
-                    {id}
-                  </p>
-
-                  {deposit?.de_id_fk && (
+                  {provider?.fo_list_produto && (
                     <>
                       <section>
                         <h2 className="card-title">
                           Produtos
                         </h2>
-                        <Link href="/adicionar-produto-deposito">
+                        <Link href="/adicionar-produto-fornecedor">
                           <Icon>add</Icon>
                         </Link>
                       </section>
 
-                      {deposit?.de_id_fk?.map((item) => (
+                      {provider?.fo_list_produto?.map((item) => (
                         <Collapsible
                           accordion
                           popout
@@ -231,4 +226,4 @@ const Deposit: NextPage = () => {
   );
 };
 
-export default Deposit;
+export default Provider;

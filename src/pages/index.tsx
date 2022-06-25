@@ -5,12 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useRef, useState } from 'react';
 import lottie from 'lottie-web';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import styles from '../../styles/Home.module.scss';
 import { schema } from '../validations/login';
 import { TextInput } from '../components/TextInput';
 import { PasswordInput } from '../components/PasswordInput';
 import LoadingButton from '../components/LoadingButton';
 import animationData from '../../public/logo.json';
+import { useQuarkusContext } from '../context/useQuarkus';
 
 interface LoginFormType{
   email: string;
@@ -21,20 +23,43 @@ const Home: NextPage = () => {
   const [isloading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  const {
+    users, getUsers,
+  } = useQuarkusContext();
+
   const anime = useRef<HTMLDivElement>(null);
 
   const {
-    register, handleSubmit, formState: { errors }, reset,
+    register, handleSubmit, formState: { errors },
   } = useForm<LoginFormType>({
     resolver: yupResolver(schema()),
   });
 
   const onSubmit = async (data:LoginFormType) => {
     setIsLoading(true);
-    console.log(data);
-    router.push('/menu');
-    reset();
+    const addToast = toast.loading('Carregando...');
+
+    const user = users.find((item) => item.email === data.email && item.senha === data.password);
+
+    if (user) {
+      toast.update(addToast, {
+        render: 'Bem-vindo(a)', type: 'success', isLoading: false, autoClose: 5000,
+      });
+
+      return router.push('/menu');
+    }
+
+    toast.update(addToast, {
+      render: 'Usuário não encontrado. Por favor, verifique o e-mail digitado e tente novamente', type: 'error', isLoading: false, autoClose: 5000,
+    });
+
+    setIsLoading(false);
+    return null;
   };
+
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
 
   useEffect(() => {
     if (anime.current) {

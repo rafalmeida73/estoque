@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { DepositsProps } from './getlength';
+import { DepositsProps } from '../../context/useQuarkus';
 
 const getlength = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
-      const { data: deposits } = await axios.get<DepositsProps[]>('http://localhost:8080/deposito/lista', {
+      const { data: deposits } = await axios.get<DepositsProps[]>('http://localhost:8080/deposito', {
         headers: {
           accept: 'application/json',
         },

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { DepositsProps } from '../../context/useQuarkus';
 
-const getMovements = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'GET') {
+const deleteProdut = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { id } = req.query;
+  if (req.method === 'DELETE') {
     try {
-      const { data } = await axios.get<DepositsProps[]>('http://localhost:8080/movimentacao', {
+      const { data } = await axios.delete(`http://localhost:8080/deposito/${id}`, {
         headers: {
           accept: 'application/json',
         },
@@ -17,8 +17,8 @@ const getMovements = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  res.setHeader('Allow', 'GET');
+  res.setHeader('Allow', 'DELETE');
   return res.status(405).end('Method not allowed');
 };
 
-export default getMovements;
+export default deleteProdut;

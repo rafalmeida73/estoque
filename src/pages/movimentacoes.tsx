@@ -1,31 +1,46 @@
+import { format } from 'date-fns';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import styles from '../../styles/Movimentacoes.module.scss';
 import Loading from '../components/Loading';
-import { api } from '../services/api';
-import { MovementsProps } from './api/getlength';
+import { useQuarkusContext } from '../context/useQuarkus';
 
 const Movimentacoes = () => {
-  const [movements, setMovements] = useState<MovementsProps[]>();
+  const {
+    getMovements, movements,
+  } = useQuarkusContext();
 
-  const getDeposits = useCallback(async () => {
+  const [loading, setLoading] = useState(false);
+
+  const loadMovemnts = useCallback(async () => {
+    setLoading(true);
     try {
-      const { data } = await api.get<MovementsProps[]>('/movements');
-      setMovements(data);
+      await getMovements();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      toast.error('Ocorreu um erro ao requisitar o tamanhos');
+      toast.error('Ocorreu um erro ao requisitar movimentações');
+    } finally {
+      setLoading(false);
     }
+  }, [getMovements]);
+
+  const formartDate = useCallback((date: string) => {
+    if (date) {
+      const movementDate = date.replace('[UTC]', '');
+      return format(new Date(movementDate), 'dd/MM/yyyy');
+    }
+
+    return null;
   }, []);
 
   useEffect(() => {
-    getDeposits();
-  }, [getDeposits]);
+    loadMovemnts();
+  }, [loadMovemnts]);
 
-  if (!movements) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -42,36 +57,29 @@ const Movimentacoes = () => {
         <main>
           <div className={styles.title}>
             <p>Movimentações</p>
-            {/* <Link href="/adicionar-movimentacao" title="Adicionar movimentação">
-              <Icon small>
-                add
-              </Icon>
-            </Link> */}
           </div>
 
           <table className="striped highlight centered ">
             <thead>
               <tr>
                 <th>Identificador</th>
-                <th>Nome do produto</th>
-                <th>Quantidade</th>
+                <th>Data de criação</th>
                 <th>Tipo</th>
               </tr>
             </thead>
 
             <tbody>
               {movements?.map((movement) => (
-                <tr key={movement?.id_movimentacao}>
+                <tr key={movement?.mo_id}>
                   <td>
-                    <Link href={`/movimentacao/${movement?.id_movimentacao}`}>
+                    <Link href={`/movimentacao/${movement?.mo_id}`}>
                       <p>
-                        {movement?.id_movimentacao}
+                        {movement?.mo_id}
                       </p>
                     </Link>
                   </td>
-                  <td>{movement?.produto?.nome_produto}</td>
-                  <td>{movement?.quantidade_movimentacao}</td>
-                  <td>{movement?.tipo_movimentacao}</td>
+                  <td>{formartDate(movement.mo_data)}</td>
+                  <td>{movement?.mo_tipo}</td>
                 </tr>
               ))}
 

@@ -5,13 +5,11 @@ const addDeposit = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     try {
       const reqData = {
-        id_deposito: 0,
-        nome_deposito: req.body.nome_deposito,
-        pontoReposicao_deposito: req.body.pontoReposicao_deposito,
-        produto: [],
+        de_nome: req.body.nome_deposito,
+        de_id_fk: [],
       };
 
-      const { data } = await axios.post('http://localhost:8080/deposito/cria', reqData, {
+      const { data } = await axios.post('http://localhost:8080/deposito', reqData, {
         headers: {
           accept: 'application/json',
         },

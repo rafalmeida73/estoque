@@ -8,56 +8,66 @@ import {
   Collapsible, CollapsibleItem, Icon,
 } from 'react-materialize';
 import format from 'date-fns/format';
+import { toast } from 'react-toastify';
 import Loading from '../../components/Loading';
-import { api } from '../../services/api';
 import styles from '../../../styles/Deposit.module.scss';
-import { MovementsProps } from '../api/getlength';
+import { useQuarkusContext, MovementsProps } from '../../context/useQuarkus';
 
 const Deposit: NextPage = () => {
   const router = useRouter();
   const id = `${router?.query?.id}`;
 
+  const {
+    movements, getMovements,
+  } = useQuarkusContext();
+
   const [movement, setMovement] = useState<MovementsProps>();
+
   const [loading, setLoading] = useState(false);
 
   const date = useMemo(() => {
-    if (movement?.data_movimentacao) {
-      const movementDate = movement?.data_movimentacao.replace('[UTC]', '');
+    if (movement?.mo_data) {
+      const movementDate = movement?.mo_data.replace('[UTC]', '');
       return format(new Date(movementDate), 'dd/MM/yyyy');
     }
 
     return null;
-  }, [movement?.data_movimentacao]);
+  }, [movement?.mo_data]);
 
   const price = useMemo(() => {
-    if (movement?.produto?.preco) {
+    if (movement?.mo_preco_produto) {
       return new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-      }).format(movement?.produto?.preco);
+      }).format(movement?.mo_preco_produto);
     }
 
     return 'R$ 0';
-  }, [movement?.produto?.preco]);
+  }, [movement?.mo_preco_produto]);
 
-  const getMovement = useCallback(async () => {
-    try {
+  const loadMovements = useCallback(
+    async () => {
       setLoading(true);
-      const { data } = await api.get<MovementsProps>(`/movement/${id}`);
-      setMovement(data);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, [id]);
+      try {
+        await getMovements();
+      } catch (error) {
+        toast.error('Ocorreu um erro ao requisitar depósito');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [getMovements],
+  );
 
   useEffect(() => {
-    getMovement();
-  }, [getMovement]);
+    loadMovements();
+  }, [loadMovements]);
 
-  if (loading || !movement) {
+  useEffect(() => {
+    setMovement(movements.find((item) => item?.mo_id === Number(id)));
+  }, [id, movements]);
+
+  if (loading) {
     return <Loading />;
   }
 
@@ -65,7 +75,7 @@ const Deposit: NextPage = () => {
     <>
       <Head>
         <title>
-          Depósito
+          Movimentação
           {' '}
           {id}
           {' '}
@@ -81,11 +91,11 @@ const Deposit: NextPage = () => {
                   <h1 className="card-title">
                     Movimentação:
                     {' '}
-                    {movement?.id_movimentacao}
+                    {movement?.mo_id}
                   </h1>
                   <div className={styles.info}>
                     <p>
-                      Data:
+                      Data de criação:
                     </p>
                     <span>
                       {' '}
@@ -94,7 +104,7 @@ const Deposit: NextPage = () => {
                   </div>
 
                   <h2 className="card-title">
-                    Produto
+                    Informações
                   </h2>
 
                   <Collapsible
@@ -103,7 +113,7 @@ const Deposit: NextPage = () => {
                   >
                     <CollapsibleItem
                       expanded={false}
-                      header={movement?.produto?.nome_produto}
+                      header={movement?.mo_tipo}
                       icon={<Icon>storage</Icon>}
                       node="div"
                     >
@@ -115,25 +125,43 @@ const Deposit: NextPage = () => {
                             </p>
                             <span>
                               {' '}
-                              {movement?.produto?.id_produto}
+                              {movement?.mo_id}
                             </span>
                           </div>
                           <div className={styles?.info}>
                             <p>
-                              Nome:
+                              Data de criação:
                             </p>
                             <span>
                               {' '}
-                              {movement?.produto?.nome_produto}
+                              {date}
                             </span>
                           </div>
                           <div className={styles.info}>
                             <p>
-                              Ponto de reposição:
+                              Desposito de destino:
                             </p>
                             <span>
                               {' '}
-                              {movement?.produto?.pontoReposicao_produto}
+                              {movement?.mo_id_deposito_destino_fk}
+                            </span>
+                          </div>
+                          <div className={styles.info}>
+                            <p>
+                              Desposito de origem
+                            </p>
+                            <span>
+                              {' '}
+                              {movement?.mo_id_deposito_origem_fk}
+                            </span>
+                          </div>
+                          <div className={styles.info}>
+                            <p>
+                              Fornecedor id:
+                            </p>
+                            <span>
+                              {' '}
+                              {movement?.mo_id_fornecedor_fk}
                             </span>
                           </div>
                           <div className={styles.info}>
@@ -151,7 +179,7 @@ const Deposit: NextPage = () => {
                             </p>
                             <span>
                               {' '}
-                              {movement?.produto?.quantidade_produto}
+                              {movement?.mo_quantidade}
                             </span>
                           </div>
                         </div>

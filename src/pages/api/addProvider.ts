@@ -3,8 +3,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const AddProvider = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
+    const bodyData = {
+      fo_nome: req.body.fo_nome,
+      fo_list_produto: [],
+    };
     try {
-      const { data } = await axios.post('http://localhost:8080/fornecedor/cria', req.body, {
+      const { data } = await axios.post('http://localhost:8080/fornecedor', bodyData, {
         headers: {
           accept: 'application/json',
         },

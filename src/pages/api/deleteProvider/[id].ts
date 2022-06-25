@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MovementsProps } from '../getlength';
 
-const product = async (req: NextApiRequest, res: NextApiResponse) => {
+const deleteProvider = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
-  if (req.method === 'GET') {
+  if (req.method === 'DELETE') {
     try {
-      const { data } = await axios.get<MovementsProps>(`http://localhost:8080/produto/buscaPorId/${id}`, {
+      const { data } = await axios.delete(`http://localhost:8080/fornecedor/${id}`, {
         headers: {
           accept: 'application/json',
         },
@@ -18,8 +17,8 @@ const product = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  res.setHeader('Allow', 'GET');
+  res.setHeader('Allow', 'DELETE');
   return res.status(405).end('Method not allowed');
 };
 
-export default product;
+export default deleteProvider;

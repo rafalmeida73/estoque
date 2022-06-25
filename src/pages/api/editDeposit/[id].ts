@@ -1,21 +1,17 @@
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const editProdut = async (req: NextApiRequest, res: NextApiResponse) => {
+const editDeposit = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
   if (req.method === 'PUT') {
     const bodyData = {
-      pr_nome: req.body.pr_nome,
-      pr_preco: req.body.pr_preco,
-      pr_quantidade: req.body.pr_quantidade,
-      pr_categoria: req.body.pr_categoria,
-      pr_reposicao: req.body.pr_reposicao,
-      pr_pont_repo: Number(req.body.pr_quantidade) < Number(req.body.pr_reposicao),
+      de_nome: req.body.de_nome,
+      de_id_fk: [],
     };
 
     try {
-      const { data } = await axios.put(`http://localhost:8080/produto/${id}`, bodyData, {
+      const { data } = await axios.put(`http://localhost:8080/deposito/${id}`, bodyData, {
         headers: {
           accept: 'application/json',
         },
@@ -31,4 +27,4 @@ const editProdut = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(405).end('Method not allowed');
 };
 
-export default editProdut;
+export default editDeposit;

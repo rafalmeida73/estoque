@@ -12,10 +12,11 @@ import LoadingButton from '../components/LoadingButton';
 import { api } from '../services/api';
 
 interface AddProductFormType{
-  nome_produto: string;
-  preco: number;
-  quantidade_produto: number;
-  pontoReposicao_produto: number;
+  pr_nome: string;
+  pr_preco: number;
+  pr_quantidade: number;
+  pr_categoria: string;
+  pr_reposicao: number;
 }
 
 const AddProduct: NextPage = () => {
@@ -64,10 +65,11 @@ const AddProduct: NextPage = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <TextInput register={register} id="nome_produto" errors={errors} icon="edit" label="Nome do produto" />
-        <TextInput register={register} id="preco" errors={errors} icon="attach_money" label="Preço" type="number" />
-        <TextInput register={register} id="quantidade_produto" errors={errors} icon="filter_1" label="Quantidade" type="number" />
-        <TextInput register={register} id="pontoReposicao_produto" errors={errors} icon="priority_high" label="Ponto de reposição" type="number" />
+        <TextInput register={register} id="pr_nome" errors={errors} icon="edit" label="Nome do produto" />
+        <TextInput register={register} id="pr_preco" errors={errors} icon="attach_money" label="Preço" type="number" />
+        <TextInput register={register} id="pr_quantidade" errors={errors} icon="filter_1" label="Quantidade" type="number" />
+        <TextInput register={register} id="pr_categoria" errors={errors} icon="priority_high" label="Categoria" />
+        <TextInput register={register} id="pr_reposicao" errors={errors} icon="priority_high" label="Ponto de reposição" type="number" />
 
         <div className={styles.formButtons}>
           <LoadingButton type="submit" title="Criar" loading={isloading} />
