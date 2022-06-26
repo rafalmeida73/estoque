@@ -109,7 +109,7 @@ const Home: NextPage = () => {
             </form>
           </section>
           <section className="col s12 m6 l6">
-            <Image src="/box.png" height="550" width="596" />
+            <Image src="/box.png" height="550" width="596" alt="Caixa de papelão" />
           </section>
         </div>
 

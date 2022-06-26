@@ -125,7 +125,7 @@ const Register: NextPage = () => {
             </form>
           </section>
           <section className="col s12 m6 l6">
-            <Image src="/boxRegister.png" height="600" width="1000" />
+            <Image src="/boxRegister.png" height="600" width="1000" alt="Caixa de papelão encima de uma esteira" />
           </section>
         </div>
 
