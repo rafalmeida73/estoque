@@ -1,21 +1,35 @@
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import styles from './Loading.module.scss';
 
-const Loading = () => (
-  <div className={styles.container}>
-    <div className="preloader-wrapper big active">
-      <div className="spinner-layer spinner-blue-only">
-        <div className="circle-clipper left">
-          <div className="circle" />
-        </div>
-        <div className="gap-patch">
-          <div className="circle" />
-        </div>
-        <div className="circle-clipper right">
-          <div className="circle" />
+const Loading = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/');
+    }
+  });
+
+  return (
+    <div className={styles.container}>
+      <div className="preloader-wrapper big active">
+        <div className="spinner-layer spinner-blue-only">
+          <div className="circle-clipper left">
+            <div className="circle" />
+          </div>
+          <div className="gap-patch">
+            <div className="circle" />
+          </div>
+          <div className="circle-clipper right">
+            <div className="circle" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Loading;

@@ -10,6 +10,7 @@ import { schema } from '../validations/addDeposit';
 import { TextInput } from '../components/TextInput';
 import LoadingButton from '../components/LoadingButton';
 import { api } from '../services/api';
+import withAuth from '../logic/auth';
 
 interface AddDepositFormType{
   id_deposito: number;
@@ -74,4 +75,4 @@ const AddDeposit: NextPage = () => {
   );
 };
 
-export default AddDeposit;
+export default withAuth(AddDeposit);

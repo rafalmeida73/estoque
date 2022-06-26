@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import styles from '../../styles/Providers.module.scss';
 import Loading from '../components/Loading';
 import { useQuarkusContext } from '../context/useQuarkus';
+import withAuth from '../logic/auth';
 
 const Providers = () => {
   const [loading, setLoading] = useState(false);
@@ -92,4 +93,4 @@ const Providers = () => {
   );
 };
 
-export default Providers;
+export default withAuth(Providers);

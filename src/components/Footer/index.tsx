@@ -2,11 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from 'react-materialize';
 import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/react';
 
 import styles from './Footer.module.scss';
 
 export const Footer = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -16,7 +18,8 @@ export const Footer = () => {
   };
 
   const handleSignOut = async () => {
-    router.push('/login');
+    signOut();
+    router.push('/');
   };
 
   return (
@@ -29,16 +32,25 @@ export const Footer = () => {
           <div className="col l2  s12">
             <ul>
 
-              <li><Link href="/menu">Início</Link></li>
-              <li><Link href="/depositos">Depósitos</Link></li>
-              <li><Link href="/movimentacoes">Movimentações</Link></li>
-              <li><Link href="/produtos">Produtos</Link></li>
-              <li><Link href="/fornecedores">Fornecedores</Link></li>
-              <li>
-                <button type="button" onClick={handleSignOut}>
-                  <a>Sair</a>
-                </button>
-              </li>
+              {session ? (
+                <>
+                  <li><Link href="/menu">Início</Link></li>
+                  <li><Link href="/depositos">Depósitos</Link></li>
+                  <li><Link href="/movimentacoes">Movimentações</Link></li>
+                  <li><Link href="/produtos">Produtos</Link></li>
+                  <li><Link href="/fornecedores">Fornecedores</Link></li>
+                  <li>
+                    <button type="button" onClick={handleSignOut}>
+                      <a>Sair</a>
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li><Link href="/">Entrar</Link></li>
+                  <li><Link href="/cadastro">Cadastrar</Link></li>
+                </>
+              )}
 
             </ul>
           </div>

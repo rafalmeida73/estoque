@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import lottie from 'lottie-web';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import { signIn, useSession } from 'next-auth/react';
 import styles from '../../styles/Home.module.scss';
 import { schema } from '../validations/login';
 import { TextInput } from '../components/TextInput';
@@ -27,6 +28,8 @@ const Home: NextPage = () => {
     users, getUsers,
   } = useQuarkusContext();
 
+  const { data: session } = useSession();
+
   const anime = useRef<HTMLDivElement>(null);
 
   const {
@@ -37,25 +40,32 @@ const Home: NextPage = () => {
 
   const onSubmit = async (data:LoginFormType) => {
     setIsLoading(true);
-    const addToast = toast.loading('Carregando...');
 
     const user = users.find((item) => item.email === data.email && item.senha === data.password);
 
     if (user) {
-      toast.update(addToast, {
-        render: 'Bem-vindo(a)', type: 'success', isLoading: false, autoClose: 5000,
+      toast.success('Bem-vindo(a)');
+
+      await signIn('credentials', {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        callbackUrl: '/menu',
       });
 
-      return router.push('/menu');
+      return;
     }
 
-    toast.update(addToast, {
-      render: 'Usuário não encontrado. Por favor, verifique o e-mail digitado e tente novamente', type: 'error', isLoading: false, autoClose: 5000,
-    });
+    toast.error('Usuário não encontrado. Por favor, verifique o e-mail digitado e tente novamente');
 
     setIsLoading(false);
-    return null;
   };
+
+  useEffect(() => {
+    if (session) {
+      router.push('/menu');
+    }
+  }, [router, session]);
 
   useEffect(() => {
     getUsers();

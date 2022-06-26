@@ -10,6 +10,7 @@ import { schema } from '../validations/addProduct';
 import { TextInput } from '../components/TextInput';
 import LoadingButton from '../components/LoadingButton';
 import { api } from '../services/api';
+import withAuth from '../logic/auth';
 
 interface AddProductFormType{
   pr_nome: string;
@@ -80,4 +81,4 @@ const AddProduct: NextPage = () => {
   );
 };
 
-export default AddProduct;
+export default withAuth(AddProduct);

@@ -10,6 +10,7 @@ import { schema } from '../validations/addProviders';
 import { TextInput } from '../components/TextInput';
 import LoadingButton from '../components/LoadingButton';
 import { api } from '../services/api';
+import withAuth from '../logic/auth';
 
 interface AddDepositFormType{
   nome_fornecedor: string;
@@ -72,4 +73,4 @@ const AddProviders: NextPage = () => {
   );
 };
 
-export default AddProviders;
+export default withAuth(AddProviders);

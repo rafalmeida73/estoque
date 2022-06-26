@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import styles from '../../styles/Deposits.module.scss';
 import Loading from '../components/Loading';
 import { useQuarkusContext } from '../context/useQuarkus';
+import withAuth from '../logic/auth';
 
 const Deposits = () => {
   const {
@@ -82,4 +83,4 @@ const Deposits = () => {
   );
 };
 
-export default Deposits;
+export default withAuth(Deposits);

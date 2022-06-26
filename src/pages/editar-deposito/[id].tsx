@@ -13,6 +13,7 @@ import { TextInput } from '../../components/TextInput';
 import LoadingButton from '../../components/LoadingButton';
 import { api } from '../../services/api';
 import { DepositsProps, useQuarkusContext } from '../../context/useQuarkus';
+import withAuth from '../../logic/auth';
 
 interface EditDepositoFormType{
   de_nome: string;
@@ -110,4 +111,4 @@ const EditDeposit: NextPage = () => {
   );
 };
 
-export default EditDeposit;
+export default withAuth(EditDeposit);

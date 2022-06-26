@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import styles from '../../styles/Movimentacoes.module.scss';
 import Loading from '../components/Loading';
 import { useQuarkusContext } from '../context/useQuarkus';
+import withAuth from '../logic/auth';
 
 const Movimentacoes = () => {
   const {
@@ -91,4 +92,4 @@ const Movimentacoes = () => {
   );
 };
 
-export default Movimentacoes;
+export default withAuth(Movimentacoes);

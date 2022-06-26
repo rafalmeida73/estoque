@@ -13,6 +13,7 @@ import { TextInput } from '../../components/TextInput';
 import LoadingButton from '../../components/LoadingButton';
 import { api } from '../../services/api';
 import { ProvidersProps, useQuarkusContext } from '../../context/useQuarkus';
+import withAuth from '../../logic/auth';
 
 interface EditProviderFormType{
   fo_nome: string;
@@ -113,4 +114,4 @@ const EditProvider: NextPage = () => {
   );
 };
 
-export default EditProvider;
+export default withAuth(EditProvider);

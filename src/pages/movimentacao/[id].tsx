@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import Loading from '../../components/Loading';
 import styles from '../../../styles/Deposit.module.scss';
 import { useQuarkusContext, MovementsProps } from '../../context/useQuarkus';
+import withAuth from '../../logic/auth';
 
 const Deposit: NextPage = () => {
   const router = useRouter();
@@ -198,4 +199,4 @@ const Deposit: NextPage = () => {
   );
 };
 
-export default Deposit;
+export default withAuth(Deposit);

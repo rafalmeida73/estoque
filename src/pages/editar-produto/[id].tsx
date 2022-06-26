@@ -13,6 +13,7 @@ import { TextInput } from '../../components/TextInput';
 import LoadingButton from '../../components/LoadingButton';
 import { api } from '../../services/api';
 import { ProductsProps, useQuarkusContext } from '../../context/useQuarkus';
+import withAuth from '../../logic/auth';
 
 interface EditProductFormType{
   pr_nome: string;
@@ -122,4 +123,4 @@ const EditProduct: NextPage = () => {
   );
 };
 
-export default EditProduct;
+export default withAuth(EditProduct);

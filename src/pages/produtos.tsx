@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import styles from '../../styles/Products.module.scss';
 import Loading from '../components/Loading';
 import { useQuarkusContext } from '../context/useQuarkus';
+import withAuth from '../logic/auth';
 
 const Products = () => {
   const [loading, setLoading] = useState(false);
@@ -105,4 +106,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default withAuth(Products);

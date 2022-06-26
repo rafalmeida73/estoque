@@ -5,6 +5,7 @@ import { VictoryBar, VictoryChart, VictoryTheme } from 'victory';
 import styles from '../../styles/Menu.module.scss';
 import NumberCard from '../components/NumberCard';
 import { useQuarkusContext } from '../context/useQuarkus';
+import withAuth from '../logic/auth';
 
 const Menu = () => {
   const {
@@ -74,4 +75,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default withAuth(Menu);

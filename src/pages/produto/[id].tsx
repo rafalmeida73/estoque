@@ -11,6 +11,7 @@ import Loading from '../../components/Loading';
 import { api } from '../../services/api';
 import styles from '../../../styles/Product.module.scss';
 import { ProductsProps, useQuarkusContext } from '../../context/useQuarkus';
+import withAuth from '../../logic/auth';
 
 const Product: NextPage = () => {
   const router = useRouter();
@@ -173,4 +174,4 @@ const Product: NextPage = () => {
   );
 };
 
-export default Product;
+export default withAuth(Product);

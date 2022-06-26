@@ -15,6 +15,7 @@ import LoadingButton from '../components/LoadingButton';
 import { api } from '../services/api';
 import Loading from '../components/Loading';
 import { useQuarkusContext } from '../context/useQuarkus';
+import withAuth from '../logic/auth';
 
 export interface AddProductInDepositType{
   id_fornecedor: {value: number, label: number};
@@ -150,4 +151,4 @@ const AddProductInProvider: NextPage = () => {
   );
 };
 
-export default AddProductInProvider;
+export default withAuth(AddProductInProvider);

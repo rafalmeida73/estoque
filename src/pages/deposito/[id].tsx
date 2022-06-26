@@ -11,6 +11,7 @@ import Loading from '../../components/Loading';
 import styles from '../../../styles/Deposit.module.scss';
 import { DepositsProps, useQuarkusContext } from '../../context/useQuarkus';
 import { api } from '../../services/api';
+import withAuth from '../../logic/auth';
 
 const Deposit: NextPage = () => {
   const router = useRouter();
@@ -231,4 +232,4 @@ const Deposit: NextPage = () => {
   );
 };
 
-export default Deposit;
+export default withAuth(Deposit);
