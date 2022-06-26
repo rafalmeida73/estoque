@@ -4,9 +4,9 @@ import Loading from '../components/Loading';
 
 function withAuth<T>(Component: NextComponentType<T>) {
   const Auth = (props: T) => {
-    const { data: session } = useSession();
+    const { status = 'unauthenticated' } = useSession();
 
-    if (!session) {
+    if (status === 'unauthenticated') {
       return <Loading />;
     }
 

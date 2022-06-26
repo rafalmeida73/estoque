@@ -85,7 +85,7 @@ const Deposit: NextPage = () => {
 
       await getDeposits();
 
-      router.push('/produtos');
+      router.push('/depositos');
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);

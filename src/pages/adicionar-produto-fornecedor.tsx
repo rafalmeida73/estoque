@@ -67,7 +67,7 @@ const AddProductInProvider: NextPage = () => {
 
       await getProviders();
 
-      router.push(`/deposito/${data.id_fornecedor.value}`);
+      router.push(`/fornecedor/${data.id_fornecedor.value}`);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);

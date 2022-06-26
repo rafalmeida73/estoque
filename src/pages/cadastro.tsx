@@ -30,7 +30,7 @@ const Register: NextPage = () => {
     users, getUsers,
   } = useQuarkusContext();
 
-  const { data: session } = useSession();
+  const { status } = useSession();
 
   const anime = useRef<HTMLDivElement>(null);
 
@@ -78,10 +78,10 @@ const Register: NextPage = () => {
   };
 
   useEffect(() => {
-    if (session) {
+    if (status === 'authenticated') {
       router.push('/menu');
     }
-  }, [router, session]);
+  }, [router, status]);
 
   useEffect(() => {
     getUsers();

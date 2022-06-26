@@ -79,8 +79,8 @@ const AddProductInDeposit: NextPage = () => {
     loadData();
   }, [loadData]);
 
-  const productsOptions = useMemo(() => (products.map((product) => ({ value: product?.pr_id, label: product?.pr_id }))), [products]);
-  const depositsOptions = useMemo(() => (deposits.map((deposit) => ({ value: deposit?.de_id, label: deposit?.de_id }))), [deposits]);
+  const productsOptions = useMemo(() => (products.map((product) => ({ value: product?.pr_id, label: product?.pr_nome }))), [products]);
+  const depositsOptions = useMemo(() => (deposits.map((deposit) => ({ value: deposit?.de_id, label: deposit?.de_nome }))), [deposits]);
   const typeOptions = [
     { value: 'doacao', label: 'Por doação' },
     { value: '', label: 'Nota fiscal' },

@@ -5,10 +5,10 @@ import styles from './Loading.module.scss';
 
 const Loading = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
-    if (!session) {
+    if (status === 'unauthenticated') {
       router.push('/');
     }
   });

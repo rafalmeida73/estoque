@@ -72,30 +72,30 @@ const Provider: NextPage = () => {
     [getProviders],
   );
 
-  const handleDeleteProvider = useCallback(async () => {
-    const addToast = toast.loading('Carregando...');
+  // const handleDeleteProvider = useCallback(async () => {
+  //   const addToast = toast.loading('Carregando...');
 
-    try {
-      setLoading(true);
-      await api.delete(`deleteProvider/${id}`);
+  //   try {
+  //     setLoading(true);
+  //     await api.delete(`deleteProvider/${id}`);
 
-      toast.update(addToast, {
-        render: 'Fornecedor removido  com sucesso', type: 'success', isLoading: false, autoClose: 5000,
-      });
+  //     toast.update(addToast, {
+  //       render: 'Fornecedor removido  com sucesso', type: 'success', isLoading: false, autoClose: 5000,
+  //     });
 
-      await getProviders();
+  //     await getProviders();
 
-      router.push('/fornecedores');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      toast.update(addToast, {
-        render: 'Ocorreu um eror ao tentar remover fornecedor, tente novamnete', type: 'error', isLoading: false, autoClose: 5000,
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [getProviders, id, router]);
+  //     router.push('/fornecedores');
+  //   } catch (error) {
+  //     // eslint-disable-next-line no-console
+  //     console.error(error);
+  //     toast.update(addToast, {
+  //       render: 'Ocorreu um eror ao tentar remover fornecedor, tente novamnete', type: 'error', isLoading: false, autoClose: 5000,
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [getProviders, id, router]);
 
   useEffect(() => {
     loadProviders();
@@ -135,9 +135,9 @@ const Provider: NextPage = () => {
                     </h1>
 
                     <div>
-                      <button type="button" onClick={handleDeleteProvider} title="Deletar">
+                      {/* <button type="button" onClick={handleDeleteProvider} title="Deletar">
                         <Icon>delete</Icon>
-                      </button>
+                      </button> */}
                       <Link href={`/editar-fornecedor/${id}`} title="Editar">
                         <Icon>edit</Icon>
                       </Link>
