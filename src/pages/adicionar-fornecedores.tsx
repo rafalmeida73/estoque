@@ -65,7 +65,7 @@ const AddProviders: NextPage = () => {
         <TextInput register={register} id="fo_nome" errors={errors} icon="edit" label="Nome do fornecedor" />
 
         <div className={styles.formButtons}>
-          <LoadingButton type="submit" title="Criar" loading={isloading} />
+          <LoadingButton type="submit" title="Criar fornecedor" loading={isloading} />
         </div>
       </form>
 

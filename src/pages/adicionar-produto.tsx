@@ -73,7 +73,7 @@ const AddProduct: NextPage = () => {
         <TextInput register={register} id="pr_reposicao" errors={errors} icon="priority_high" label="Ponto de reposição" type="number" />
 
         <div className={styles.formButtons}>
-          <LoadingButton type="submit" title="Criar" loading={isloading} />
+          <LoadingButton type="submit" title="Criar produto" loading={isloading} />
         </div>
       </form>
 

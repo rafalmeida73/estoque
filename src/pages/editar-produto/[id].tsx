@@ -115,7 +115,7 @@ const EditProduct: NextPage = () => {
         <TextInput register={register} id="pr_reposicao" errors={errors} icon="priority_high" label="Ponto de reposição" type="number" defaultValue={product?.pr_reposicao} />
 
         <div className={styles.formButtons}>
-          <LoadingButton type="submit" title="Editar" loading={isloading} />
+          <LoadingButton type="submit" title="Editar produto" loading={isloading} />
         </div>
       </form>
 

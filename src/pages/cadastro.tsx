@@ -8,20 +8,21 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
-import styles from '../../styles/Home.module.scss';
-import { schema } from '../validations/login';
+import styles from '../../styles/Register.module.scss';
+import { schema } from '../validations/register';
 import { TextInput } from '../components/TextInput';
 import { PasswordInput } from '../components/PasswordInput';
 import LoadingButton from '../components/LoadingButton';
 import animationData from '../../public/logo.json';
 import { useQuarkusContext } from '../context/useQuarkus';
+import { api } from '../services/api';
 
 interface LoginFormType{
   email: string;
-  password: string;
+  senha: string;
 }
 
-const Home: NextPage = () => {
+const Register: NextPage = () => {
   const [isloading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -42,23 +43,38 @@ const Home: NextPage = () => {
   const onSubmit = async (data:LoginFormType) => {
     setIsLoading(true);
 
-    const user = users.find((item) => item.email === data.email && item.senha === data.password);
+    const addToast = toast.loading('Carregando...');
+    const checkUser = users.find((item) => item.email === data.email);
 
-    if (user) {
+    if (checkUser) {
+      toast.update(addToast, {
+        render: 'Já exite um usuário com esse e-mail', type: 'error', isLoading: false, autoClose: 5000,
+      });
+
+      setIsLoading(false);
+
+      return;
+    }
+
+    try {
+      await api.post('/addUser', data);
+
+      await getUsers();
+
       toast.success('Bem-vindo(a)');
 
       await signIn('credentials', {
         redirect: false,
         email: data.email,
-        password: data.password,
+        password: data.senha,
       });
-
-      return;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      toast.error('Erro ao tentar fazer cadastro. Por favor, verifique o e-mail digitado e tente novamente');
+    } finally {
+      setIsLoading(false);
     }
-
-    toast.error('Usuário não encontrado. Por favor, verifique o e-mail digitado e tente novamente');
-
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -101,15 +117,15 @@ const Home: NextPage = () => {
 
               <TextInput register={register} id="email" errors={errors} icon="account_circle" label="E-mail" isEmail />
 
-              <PasswordInput label="Senha" register={register} id="password" errors={errors} />
+              <PasswordInput label="Senha" register={register} id="senha" errors={errors} />
 
               <div className={styles.formButtons}>
-                <LoadingButton type="submit" title="Entrar" loading={isloading} />
+                <LoadingButton type="submit" title="Cadastrar" loading={isloading} />
               </div>
             </form>
           </section>
           <section className="col s12 m6 l6">
-            <Image src="/box.png" height="550" width="596" />
+            <Image src="/boxRegister.png" height="600" width="1000" />
           </section>
         </div>
 
@@ -119,4 +135,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Register;

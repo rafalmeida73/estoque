@@ -9,13 +9,11 @@
     align-items: center;
   
     table{
-      border: 1px solid var(--black);
-      border-radius: 1rem;
       padding: 2rem 0;
 
       td p{
         cursor: pointer;
-        color: var(--blue-500);
+        color: var(--red-200);
         font-weight: bold;
       }
     }
@@ -31,10 +29,13 @@
   p{
     font-size: 2rem;
     font-weight: bold;
+    color: var(--white);
   }
 
   i{
     cursor: pointer;
-    color: var(--yellow-500);
+    color: var(--red-200);
+    font-weight: bold;
+    font-size: 2rem;
   }
 }

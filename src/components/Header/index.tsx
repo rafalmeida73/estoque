@@ -15,7 +15,7 @@ const Header = () => {
   };
 
   return (
-    <div className={`navbar-fixed ${styles.container}`}>
+    <div className={`${styles.container}`}>
       <Navbar
         alignLinks="right"
         brand={(
@@ -23,7 +23,7 @@ const Header = () => {
             <Link href={`${session ? '/menu' : '/'}`}>
               <a>
                 <Image
-                  src="/logo.jpg"
+                  src="/logo.png"
                   width={50}
                   height={50}
                   alt="Circulo laranja com uma bola de futebol no centro"
@@ -36,13 +36,7 @@ const Header = () => {
         )}
         id="mobile-nav"
         menuIcon={<Icon>menu</Icon>}
-        options={{
-          draggable: true,
-          edge: 'left',
-          inDuration: 250,
-          outDuration: 200,
-          preventScrolling: true,
-        }}
+
       >
         <Link href={`${session ? '/menu' : '/'}`}>
           <a>{session ? 'Início' : 'Entrar'}</a>

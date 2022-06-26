@@ -106,7 +106,7 @@ const EditProvider: NextPage = () => {
         <TextInput register={register} id="fo_nome" errors={errors} icon="edit" label="Nome do fornecedor" defaultValue={provider?.fo_nome} />
 
         <div className={styles.formButtons}>
-          <LoadingButton type="submit" title="Editar" loading={isloading} />
+          <LoadingButton type="submit" title="Editar fornecedor" loading={isloading} />
         </div>
       </form>
 

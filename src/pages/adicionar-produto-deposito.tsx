@@ -163,7 +163,7 @@ const AddProductInDeposit: NextPage = () => {
         </p>
 
         <div className={styles.formButtons}>
-          <LoadingButton type="submit" title="Adicionar" loading={isloading} />
+          <LoadingButton type="submit" title="Adicionar produto" loading={isloading} />
         </div>
       </form>
 

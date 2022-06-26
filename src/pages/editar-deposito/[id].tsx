@@ -103,7 +103,7 @@ const EditDeposit: NextPage = () => {
         <TextInput register={register} id="de_nome" errors={errors} icon="edit" label="Nome" defaultValue={deposit?.de_nome} />
 
         <div className={styles.formButtons}>
-          <LoadingButton type="submit" title="Editar" loading={isloading} />
+          <LoadingButton type="submit" title="Editar depósito" loading={isloading} />
         </div>
       </form>
 

@@ -10,10 +10,10 @@
 
   --yellow-500: #FBB91F;
   --gray-800: #7A7A7A;
-  --blue-500: #00A7E7;
-
+  
   --green-500: #009688;
   --red-500: #f44336;
+  --red-200: #E26565;
 }
 
 @media (max-width: 1080px) {
@@ -29,7 +29,7 @@
 }
 
 body {
-  background-color: var(--white);
+  background: linear-gradient(233.69deg, #E7A1A1 17.89%, #EDCC97 87.54%);
   color: var(--black);
 }
 
@@ -38,7 +38,7 @@ input,
 textarea,
 select,
 button {
-  font: 400 1rem "Roboto", sans-serif;
+  font: 400 1rem "Poppins", sans-serif;
 }
 
 button {
@@ -78,12 +78,31 @@ th {
 
 .rtf{
   button{
-    background-color: var(--blue-500);
+    background-color: var(--red-200);
   }
 }
 
 
 // Materialize
+
+nav a.sidenav-trigger i {
+  color: var(--white);
+}
+
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card{
+  background-color: rgba(242,242,242,0.5) !important;
+}
+
+
+.collapsible-header {
+  border-bottom: 1px solid #000 !important;
+}
 
 
 .dropdown-content {
@@ -108,12 +127,12 @@ th {
 
 .spinner-layer {
   padding: 5px !important;
-  border-color: var(--gray-800) !important;
+  border-color: var(--white) !important;
 }
 
 .btn:hover,
 .btn:focus {
-  background-color: var(--blue-500) !important;
+  background-color: var(--red-200) !important;
 }
 
 nav {
@@ -123,7 +142,7 @@ nav {
     a:first-of-type {
       display: flex !important;
 
-      color: var(--black) !important;
+      color: var(--white) !important;
       font-family: "Roboto", sans-serif;
 
       max-height: 3.8rem;
@@ -139,7 +158,7 @@ nav {
   }
 
   ul a {
-    color: var(--black) !important;
+    color: var(--white) !important;
   }
 
   li {
@@ -158,11 +177,16 @@ nav {
   }
 }
 
+
+input:not(.browser-default) {
+  border-bottom:1px solid var(--white) !important;
+}
+
 .input-field input:focus + label,
 .input-field input:focus + label,
 .input-field textarea:focus + label,
 .input-field input:focus + label {
-  color: var(--blue-500) !important;
+  color: var(--red-200) !important;
 }
 
 .input-field input:focus,
@@ -170,12 +194,16 @@ nav {
 .input-field textarea:focus,
 .input-field input:focus,
 .react-tel-input input:focus {
-  border-bottom: 1px solid var(--blue-500) !important;
-  box-shadow: 0 1px 0 0 var(--blue-500) !important;
+  border-bottom: 1px solid var(--red-200) !important;
+  box-shadow: 0 1px 0 0 var(--red-200) !important;
 }
 
+
+.input-field .prefix {
+  color: var(--white) !important;
+}
 .input-field .prefix.active {
-  color: var(--blue-500) !important;
+  color: var(--red-200) !important;
 }
 
 .react-tel-input {
@@ -191,11 +219,11 @@ nav {
 }
 
 .input-field .btn {
-  background-color: var(--blue-500) !important;
+  background-color: var(--red-200) !important;
 }
 
 .input-field label {
-  color: var(--black) !important;
+  color: var(--white) !important;
 }
 
 .collapsible {
@@ -219,7 +247,7 @@ input[type="text"]:not(.browser-default).validate + label {
 }
 
 .btn-floating {
-  background-color: var(--blue-500) !important;
+  background-color: var(--red-200) !important;
 }
 
 .fixed-action-btn button {
@@ -244,7 +272,7 @@ input[type="text"]:not(.browser-default).validate + label {
   ul{
     li{
       span{
-        color: var(--blue-500) ;
+        color: var(--red-200) ;
       }
     }
   }

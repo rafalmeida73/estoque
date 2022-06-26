@@ -52,7 +52,7 @@ const Menu = () => {
               width={650}
             >
               <VictoryBar
-                style={{ data: { fill: '#00A7E7' } }}
+                style={{ data: { fill: '#E26565' } }}
                 alignment="start"
                 data={[
                   { title: 'Depósitos', quantity: deposits?.length || 0 },

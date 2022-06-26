@@ -20,7 +20,7 @@ export const PasswordInput = ({
 
   return (
     <div className={styles.container}>
-      <div className="input-field col s6">
+      <div className="input-field s12">
         <i className="material-icons prefix">{icon}</i>
         <input id={id} type={visible ? 'password' : 'text'} className="validate" {...register?.(id)} {...rest} />
         <label htmlFor={id}>{label}</label>
